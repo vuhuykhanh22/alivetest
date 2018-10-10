@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	 var appendNumber = 4;
+   var appendNumber = 4;
     var prependNumber = 1;
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 3,
@@ -40,12 +40,53 @@ $(document).ready(function() {
         });
         
  
-	$('.tabs__title li b').on('click',function(){
-			$('.tabs__title li b').removeClass('active');
-			$(this).addClass('active');
-			var chiso = $(this).parent().index()+1;
-			console.log(chiso);
-			$('.group-content li .catalog').removeClass('appear');
-			$('.group-content li:nth-child(' + chiso +") .catalog").addClass('appear');
-		})
+  $('.tabs__title li b').on('click',function(){
+      $('.tabs__title li b').removeClass('active');
+      $(this).addClass('active');
+      var chiso = $(this).parent().index()+1;
+      console.log(chiso);
+      $('.group-content li .catalog').removeClass('appear');
+      $('.group-content li:nth-child(' + chiso +") .catalog").addClass('appear');
+    })
 });
+function getWidth(){
+  var presentWidth = $(window).width();
+  if(presentWidth < 768){
+    var yourDiv = $("ul.tabs__title");
+    var yourSpan = $('<select ></select>');
+    yourDiv.before(yourSpan);
+    yourSpan.append(yourDiv.children());
+    yourDiv.remove();
+    $('select li').each(function(){
+    $(this).replaceWith( "<option>" + $(this).html() + "</option>" );  
+  }) 
+}
+};
+getWidth();
+resizeWidth();
+function resizeWidth(){
+   $(window).resize(function(){
+    if( $(window).width() < 768){
+    var yourDiv = $("ul.tabs__title");
+    var yourSpan = $('<select ></select>');
+    yourDiv.before(yourSpan);
+    yourSpan.append(yourDiv.children());
+    yourDiv.remove();
+    $('select li').each(function(){
+    $(this).replaceWith( "<option>" + $(this).html() + "</option>" );
+
+});
+  }
+  else if($(window).width() >= 768){
+    var yourDiv = $("select");
+    var yourSpan = $('<ul class= "tabs__title" > </ul>');
+    yourDiv.before(yourSpan);
+    yourSpan.append(yourDiv.children());
+    yourDiv.remove();
+   $('option').each(function(){
+    $(this).replaceWith( "<li> <b>" + $(this).html() + " </b> </li>" );
+    $('ul.tabs__title li b').first().addClass('active');
+  });
+}
+  });
+}
